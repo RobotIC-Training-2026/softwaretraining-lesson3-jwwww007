@@ -47,10 +47,10 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
     {
      if (head_buf[0]==0xCC&&head_buf[1]==0xDD)
        {
-					uint8_t count = head_buf[3];   
+		  uint8_t count = head_buf[3];   
           data_lenth = count;  
-					if (count > 4){ count = 4; } 
-					memset(rcv_it_buf, 0, sizeof(rcv_it_buf));
+		  if (count > 4){ count = 4; } 
+		  memset(rcv_it_buf, 0, sizeof(rcv_it_buf));
           memcpy(rcv_it_buf, head_buf, 4); 
           stage = 1;                 
           HAL_UART_Receive_IT(&huart1, &rcv_it_buf[4], data_lenth); }
@@ -118,7 +118,7 @@ int main(void)
   MX_GPIO_Init();
   MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */
-	HAL_UART_Receive_IT(&huart1, head_buf, 4); 
+  HAL_UART_Receive_IT(&huart1, head_buf, 4); 
   /* USER CODE END 2 */
 	
   /* Infinite loop */
@@ -129,7 +129,7 @@ int main(void)
 		if(done ==1){
 			HAL_Delay(1000);        
 			sprintf(send_it_buf, "ID: %02X number: %d distance:%d %d %d %d\n", head_buf[2],head_buf[3],rcv_it_buf[4],rcv_it_buf[5],rcv_it_buf[6],rcv_it_buf[7]);
-      HAL_UART_Transmit(&huart1, (uint8_t*)send_it_buf, strlen(send_it_buf),100);
+            HAL_UART_Transmit(&huart1, (uint8_t*)send_it_buf, strlen(send_it_buf),100);
 			done = 0;
 			HAL_UART_Receive_IT(&huart1, head_buf, 4);
 			}
